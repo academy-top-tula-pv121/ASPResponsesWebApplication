@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Home page</title>
+</head>
+<body>
+    <h1>User info</h1>
+    <div id="answer"></div>
+    <!--form action="useraction" method="post"-->
+        <p>Name: <input type="text" id="name"></p>
+        <p>Age: <input type="number" id="age"></p>
+        <!--
+        <p>
+            Skills:<br>
+            <input type="text" name="skill"><br>
+            <input type="text" name="skill"><br>
+            <input type="text" name="skill"><br>
+        </p>
+        -->
+        <button id="send">Send</button>
+    <script>
+        document.getElementById("send").addEventListener("click", sendJson);
+
+        async function sendJson() {
+            let response = await fetch("/user", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: document.getElementById("name").value,
+                    age: document.getElementById("age").value
+                })
+            });
+            let message = await response.json();
+            document.getElementById("answer").innerText = message.text;
+        }
+
+    </script>
+
+</body>
+</html>
